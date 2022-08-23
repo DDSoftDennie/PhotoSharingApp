@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using DDControllers;
+﻿using DDControllers;
 
 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
