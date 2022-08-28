@@ -6,13 +6,12 @@ var builder = new ConfigurationBuilder()
 var configuration = builder.Build();
 var connectionString = configuration.GetConnectionString("StorageAccount");
 
-var Photos = new PhotoData();
 var ui = new UIController();
 var fc = new FileController(ui.GetDirectory());
 var blobService = new DDBlobService(connectionString);
 
 
-Photos.AddPhotos(fc.GetPhotoFiles());
+PhotoFactory.LoadPhotos(fc.GetPhotoFiles());
 ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
 
 
@@ -24,7 +23,7 @@ while (Action <3)
     {
     case 1:
         { 
-            foreach( var p in Photos.AllPhotoNames)
+            foreach( var p in PhotoFactory.GetAllPhotoNames())
             {
                 ui.PrintString(p);
             }
@@ -35,10 +34,13 @@ while (Action <3)
             string containerName = ui.AskForContainerName();
             blobService.CreateContainer(containerName);
 
-            foreach(string p in Photos.AllPhotoNames)
+            foreach(string p in PhotoFactory.GetAllPhotoNames())
             {
                 blobService.UploadBlob(p);
                 ui.PrintString($"Uploaded {p} to {containerName}");
+                Photo photo = PhotoFactory.GetPhoto(p);
+                var E = PhotoFactory.ToEntity("2022", photo);
+                //todo: Add entity to storage table
             }
             break;
         }

@@ -1,33 +1,24 @@
-public record Photo
+public static class PhotoFactory
 {
-    public string FileName { get; set; } ="";
+    private static List<Photo> Photos { get; set; } = new List<Photo>();
 
-    public string URI { get; set; }
-    public string? ALT {get; set;}
-
-}
-
-public class PhotoData
-{
-    public PhotoData()
-    {
-
-    }
-    private List<Photo> Photos { get; set; } = new List<Photo>();
-    public List<string> AllPhotoNames => 
+    public static Photo GetPhoto(string FileName) => 
+                                                Photos
+                                                .FirstOrDefault(p => p.FileName == FileName);
+    public static List<string> GetAllPhotoNames() => 
                                             Photos.Select(p => p.FileName)
                                             .ToList();
 
-    public List<string> ALLPhotoALTS => 
+    public static List<string> GetALLPhotoALTS() => 
                                         Photos.Select(p => p.ALT)
                                         .ToList();
 
-    public void AddPhoto(string fileName)
+    public static void LoadPhoto(string fileName)
     {
         Photos.Add(new Photo { FileName = fileName });
     }
 
-    public void AddPhotos(List<string> fileNames)
+    public static void LoadPhotos(List<string> fileNames)
     {
         foreach (string fileName in fileNames)
         {
@@ -35,7 +26,7 @@ public class PhotoData
         }
     }
 
-    public TableEntity ToEntity(string year, Photo p)
+    public static TableEntity ToEntity(string year, Photo p)
     {
         string partitionKey = year;
         string rowKey = $"{year}-{p.FileName}";
