@@ -90,6 +90,33 @@ namespace DDControllers
             }
         }
 
+        public string AskForStartTrim()
+        {
+            Console.WriteLine("Please enter the start trim:");
+            string? startTrim = Console.ReadLine();
+            if (startTrim == null)
+            {
+                throw new ArgumentNullException("startTrim");
+            }
+            else
+            {
+                return startTrim;
+            }
+        }
+
+        public string AskForEndTrim()
+        {
+            Console.WriteLine("Please enter the end trim:");
+            string? endTrim = Console.ReadLine();
+            if (endTrim == null)
+            {
+                throw new ArgumentNullException("endTrim");
+            }
+            else
+            {
+                return endTrim;
+            }
+        }
         public int AskOptions()
         {
             WriteLine("Please enter the number of the option you want to select:");

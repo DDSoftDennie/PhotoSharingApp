@@ -8,45 +8,25 @@ namespace DDAzure{
         private TableClient _tableClient;
         private string _connectionString;
         
-        public DDTableService()
+        public DDTableService(string connectionString, string tableName)
         {
+            _tableClient = new TableClient(connectionString, tableName);
+            _tableClient.CreateIfNotExists();
+        }
+   
 
+        public void InsertEntity(TableEntity e)
+        {
+            _tableClient.AddEntity(e);
         }
 
-
-
-        public async Task<bool> CreateTable(string tableName)
+        public void DeleteEntity(string partitionKey, string rowKey)
         {
-            try{
-          
-                return true;
-            }
-            catch(Exception e)
-            {
-                return false;
-            }
-           
-
+            _tableClient.DeleteEntity(partitionKey, rowKey);
         }
-
-
-        public void DeleteTable(string tableName)
+        public void UpdateEntity(TableEntity p)
         {
-           
-        }
-        public void InsertEntity(string tableName, TableEntity p)
-        {
-           
-        }
-
-        public void DeleteEntity(string tableName, string partitionKey, string rowKey)
-        {
-     
-        
-        }
-        public void UpdateEntity(string tableName, TableEntity p)
-        {
-          
+       //   _tableClient.UpdateEntity(p);
         }
  
 

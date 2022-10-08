@@ -26,10 +26,12 @@ public static class PhotoFactory
         }
     }
 
-    public static TableEntity ToEntity(string year, Photo p)
+    public static TableEntity ToEntity(string year, Photo p, string containerName, string startTrim, string endTrim)
     {
         string partitionKey = year;
-        string rowKey = $"{year}-{p.FileName}";
+        string photoNum = p.FileName.TrimEnd(endTrim.ToCharArray());
+        photoNum = photoNum.TrimStart(startTrim.ToCharArray());
+        string rowKey = photoNum;
 
         var entity = new TableEntity(partitionKey, rowKey)
         {
