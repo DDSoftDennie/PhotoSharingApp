@@ -24,11 +24,11 @@ namespace DDControllers
             files = Directory.GetFiles(".");
             foreach (string file in files)
             {
-                if (file.EndsWith(".png"))
+                if (file.EndsWith(".png") || file.EndsWith(".PNG"))
                 {
                     pngCount++;
                 }
-                else if (file.EndsWith(".jpg"))
+                else if (file.EndsWith(".jpg") || file.EndsWith(".JPG"))
                 {
                     jpgCount++;
                 }
@@ -45,7 +45,7 @@ namespace DDControllers
             List<string> photoFiles = new List<string>();
             foreach (string file in files)
             {
-                if (file.EndsWith(".png") || file.EndsWith(".jpg"))
+                if (file.EndsWith(".png") || file.EndsWith(".PNG") || file.EndsWith(".jpg") || file.EndsWith(".JPG"))
                 {
                     photoFiles.Add(file);
                 }
@@ -59,7 +59,7 @@ namespace DDControllers
             int i = 0;
             foreach (string file in files)
             {
-                if (file.EndsWith(".png"))
+                if (file.EndsWith(".png") || file.EndsWith(".PNG"))
                 {
                     pngs.Add(file);
                     i++;
@@ -74,7 +74,7 @@ namespace DDControllers
             int i = 0;
             foreach (string file in files)
             {
-                if (file.EndsWith(".jpg"))
+                if (file.EndsWith(".jpg") || file.EndsWith(".JPG"))
                 {
                     jpgs.Add(file);
                     i++;
