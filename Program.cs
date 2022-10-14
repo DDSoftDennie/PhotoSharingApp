@@ -17,7 +17,7 @@ ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
 
 
 int Action = ui.AskOptions();
-while (Action <3)
+while (Action <4)
 {
 
     switch(Action)
@@ -45,6 +45,20 @@ while (Action <3)
                 var E = repo.ToEntity(year, repo.GetPhoto(p), containerName, startTrim, endTrim);
          
                 tableService.InsertEntity(E);
+            }
+            break;
+        }
+    case 3:
+        {
+            ui.PrintString("This are the JPG files:");
+            foreach (var p in fc.GetJpgs())
+            {
+                ui.PrintString(p);
+            }
+            ui.PrintString("This are the PNG files:");
+            foreach (var p in fc.GetPngs())
+            {
+                ui.PrintString(p);
             }
             break;
         }

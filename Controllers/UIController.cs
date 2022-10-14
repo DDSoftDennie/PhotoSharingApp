@@ -122,7 +122,8 @@ namespace DDControllers
             WriteLine("Please enter the number of the option you want to select:");
             WriteLine("1. List all IMAGE files");
             WriteLine("2. Upload IMAGE files to blob storage");
-            WriteLine("3. Exit");
+            WriteLine("3. Split JPEG files into PNG files");
+            WriteLine("4. Exit");
             string? answer = Console.ReadLine();
             if (answer == null)
             {
