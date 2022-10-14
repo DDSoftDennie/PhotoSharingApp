@@ -53,30 +53,25 @@ namespace DDControllers
             return photoFiles;
         }
 
-        public List<string> GetFilesFromType(string type)
+        public IEnumerable<string> GetFilesFromType(string type)
         {
-            string typeExtNoCaps = "." + type.ToLower();
-            List<string> filesOfType = new List<string>();
             foreach (string file in files)
             {
-                if (file.ToLower().EndsWith(typeExtNoCaps))
+                if (file.ToLower().EndsWith(type.ToLower()))
                 {
-                    filesOfType.Add(file);
+                    yield return file;
                 }
             }
-            return filesOfType;
         }
 
         public List<string> GetPngs()
         {
-            List<string> pngs = GetFilesFromType("png");
-            return pngs;
+            return GetFilesFromType("png").ToList();
         }
 
         public List<string> GetJpgs()
         {
-            List<string> jpgs = GetFilesFromType("jpg");
-            return jpgs;
+            return GetFilesFromType("jpg").ToList();
         }
   
         public string GetDirectoryPath()
