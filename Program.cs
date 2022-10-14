@@ -11,8 +11,8 @@ var ui = new UIController();
 var fc = new FileController(ui.GetDirectory());
 var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
-
-PhotoFactory.LoadPhotos(fc.GetPhotoFiles());
+PhotoRepository repo = new PhotoRepository();
+repo.LoadPhotos(fc.GetPhotoFiles());
 ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
 
 
@@ -24,7 +24,7 @@ while (Action <3)
     {
     case 1:
         { 
-            foreach( var p in PhotoFactory.GetAllPhotoNames())
+            foreach( var p in repo.GetAllPhotoNames())
             {
                 ui.PrintString(p);
             }
@@ -38,11 +38,11 @@ while (Action <3)
             string startTrim = ui.AskForStartTrim();
             string endTrim = ui.AskForEndTrim();
 
-            foreach(string p in PhotoFactory.GetAllPhotoNames())
+            foreach(string p in repo.GetAllPhotoNames())
             {
                 blobService.UploadBlob(p);
                 ui.PrintString($"Uploaded {p} to {containerName}");
-                var E = PhotoFactory.ToEntity(year, PhotoFactory.GetPhoto(p), containerName, startTrim, endTrim);
+                var E = repo.ToEntity(year, repo.GetPhoto(p), containerName, startTrim, endTrim);
          
                 tableService.InsertEntity(E);
             }
