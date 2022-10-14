@@ -53,33 +53,29 @@ namespace DDControllers
             return photoFiles;
         }
 
-        public List<string> GetPngs()
+        public List<string> GetFilesFromType(string type)
         {
-            List<string> pngs = new List<string>();
-            int i = 0;
+            string typeExtNoCaps = "." + type.ToLower();
+            List<string> filesOfType = new List<string>();
             foreach (string file in files)
             {
-                if (file.EndsWith(".png") || file.EndsWith(".PNG"))
+                if (file.ToLower().EndsWith(typeExtNoCaps))
                 {
-                    pngs.Add(file);
-                    i++;
+                    filesOfType.Add(file);
                 }
             }
+            return filesOfType;
+        }
+
+        public List<string> GetPngs()
+        {
+            List<string> pngs = GetFilesFromType("png");
             return pngs;
         }
 
         public List<string> GetJpgs()
         {
-            List<string> jpgs = new List<string>();
-            int i = 0;
-            foreach (string file in files)
-            {
-                if (file.EndsWith(".jpg") || file.EndsWith(".JPG"))
-                {
-                    jpgs.Add(file);
-                    i++;
-                }
-            }
+            List<string> jpgs = GetFilesFromType("jpg");
             return jpgs;
         }
   
@@ -103,18 +99,6 @@ namespace DDControllers
             return totalCount;
         }
 
-        public List<string> GetFilesFromType(string type)
-        {
-            List<string> filteredFiles = new List<string>(); 
-            foreach (string file in files)
-            {
-                if (file.EndsWith(type))
-                {
-                    filteredFiles.Add(file);
-                }
-            }
-            return filteredFiles;
-        }
         public int GetJpgCount()
         {
             return jpgCount;
