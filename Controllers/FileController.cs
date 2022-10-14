@@ -57,7 +57,7 @@ namespace DDControllers
         {
             foreach (string file in files)
             {
-                if (file.ToLower().EndsWith(type.ToLower()))
+                if (file.EndsWith(type, StringComparison.OrdinalIgnoreCase))
                 {
                     yield return file;
                 }

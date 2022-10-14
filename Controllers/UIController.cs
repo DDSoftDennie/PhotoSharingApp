@@ -142,7 +142,6 @@ namespace DDControllers
         
         private List<string> GetAllFilesFromType(string type)
         {
-           // type = AskForFileType();
             type = "." + type;
             List<string> files = fc.GetFilesFromType(type).ToList();
             return files;
