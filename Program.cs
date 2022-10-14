@@ -4,7 +4,8 @@ var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.local.json");
 var configuration = builder.Build();
-var connectionString = configuration.GetConnectionString("StorageAccount");
+var connectionString = configuration.GetConnectionString("StorageAccount");               
+
 
 var ui = new UIController();
 var fc = new FileController(ui.GetDirectory());
