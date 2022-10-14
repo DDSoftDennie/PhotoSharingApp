@@ -12,7 +12,7 @@ var fc = new FileController(ui.GetDirectory());
 var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
 PhotoRepository repo = new PhotoRepository();
-repo.LoadPhotos(fc.GetPhotoFiles());
+repo.LoadPhotos(fc.GetPhotoFiles().ToList());
 ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
 
 

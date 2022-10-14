@@ -40,17 +40,9 @@ namespace DDControllers
             }
         }
 
-        public List<string> GetPhotoFiles()
+        public IEnumerable<string> GetPhotoFiles()
         {
-            List<string> photoFiles = new List<string>();
-            foreach (string file in files)
-            {
-                if (file.EndsWith(".png") || file.EndsWith(".PNG") || file.EndsWith(".jpg") || file.EndsWith(".JPG"))
-                {
-                    photoFiles.Add(file);
-                }
-            }
-            return photoFiles;
+         return GetFilesFromType(new List<string> {"jpg", "png"});
         }
 
         public IEnumerable<string> GetFilesFromType(string type)
@@ -62,14 +54,26 @@ namespace DDControllers
                     yield return file;
                 }
             }
+     
         }
 
-        public List<string> GetPngs()
+        public IEnumerable<string> GetFilesFromType(IEnumerable<string> types)
+        {  
+            var output = new List<string>();
+            foreach (string type in types)
+            {
+                output.AddRange(GetFilesFromType(type));
+            }
+            return output;
+        }
+        
+
+        public IEnumerable<string> GetPngs()
         {
             return GetFilesFromType("png").ToList();
         }
 
-        public List<string> GetJpgs()
+        public IEnumerable<string> GetJpgs()
         {
             return GetFilesFromType("jpg").ToList();
         }
