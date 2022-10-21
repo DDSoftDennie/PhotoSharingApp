@@ -26,9 +26,9 @@ public class PhotoRepository
         }
     }
 
-    public TableEntity ToEntity(string year, Photo p, string containerName, string startTrim, string endTrim)
+    public TableEntity ToEntity(Photo p, string containerName, string startTrim, string endTrim)
     {
-        string partitionKey = year;
+        string partitionKey = containerName;
         string photoNum = p.FileName.TrimEnd(endTrim.ToCharArray());
         photoNum = photoNum.TrimStart(startTrim.ToCharArray());
         string rowKey = photoNum;

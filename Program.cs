@@ -64,7 +64,6 @@ while (Option <4)
         {
             string containerName = ui.AskForContainerName();
             blobService.CreateContainer(containerName);
-            string year = ui.AskForYear();
             string startTrim = ui.AskForStartTrim();
             string endTrim = ui.AskForEndTrim();
 
@@ -72,7 +71,7 @@ while (Option <4)
             {
                 blobService.UploadBlob(p);
                 ui.PrintString($"Uploaded {p} to {containerName}");
-                var E = repo.ToEntity(year, repo.GetPhoto(p), containerName, startTrim, endTrim);
+                var E = repo.ToEntity(repo.GetPhoto(p), containerName, startTrim, endTrim);
          
                 tableService.InsertEntity(E);
             }

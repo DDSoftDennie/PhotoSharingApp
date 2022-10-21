@@ -74,7 +74,6 @@ namespace DDControllers
         {
          return GetFilesFromType(new List<string> {"jpg", "png"});
         }
-
         public IEnumerable<string> GetFilesFromType(string type)
         {
             foreach (string file in files)
@@ -96,8 +95,6 @@ namespace DDControllers
             }
             return output;
         }
-        
-
 
         public List<string> GetAllFiles()
         {       
@@ -108,21 +105,12 @@ namespace DDControllers
             }
             return allFiles;
         }
-
-
-    
         public IEnumerable<string> GetPngs()=> GetFilesFromType("png");
-      
-
-        // return GetFilesFromType("png").ToList();
-
         public IEnumerable<string> GetJpgs() => GetFilesFromType("jpg");
-        //  return GetFilesFromType("jpg").ToList();
-        public string GetDirectoryPath()=> dir;
-        public int GetFileCount()=>totalCount;
-
-        public int GetJpgCount()=> jpgCount;
-        public int GetPngCount()=> pngCount;
+        public string GetDirectoryPath() => dir;
+        public int GetFileCount() =>totalCount;
+        public int GetJpgCount() => jpgCount;
+        public int GetPngCount() => pngCount;
       
 
         public void PrintSummary()
