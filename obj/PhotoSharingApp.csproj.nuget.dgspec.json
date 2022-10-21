@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp.csproj": {}
+    "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj": {}
   },
   "projects": {
-    "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp.csproj": {
+    "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp.csproj",
+        "projectUniqueName": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj",
         "projectName": "PhotoSharingApp",
-        "projectPath": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp.csproj",
+        "projectPath": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj",
         "packagesPath": "C:\\Users\\dpcfr\\.nuget\\packages\\",
-        "outputPath": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\obj\\",
+        "outputPath": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

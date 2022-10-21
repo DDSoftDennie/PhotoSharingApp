@@ -40,6 +40,36 @@ namespace DDControllers
             }
         }
 
+        public IEnumerable<string> GetFolders()
+        {
+            var folders = Directory.GetDirectories(".");
+            foreach (var folder in folders)
+            {
+                yield return folder;
+            }
+
+        }
+
+        public string GetFolderByNum(int num)
+        {
+            var folders = GetFolders();
+            var f = folders.ElementAt(num-1);
+            return f;
+        }
+
+        public IEnumerable<string> GetFoldersWithNum()
+        {
+            var folders =  GetFolders();
+            int i = 0;
+            foreach (var folder in folders)
+            {
+                i++;
+                yield return $"{i}. {folder}";
+            }
+
+        }
+        
+          
         public IEnumerable<string> GetPhotoFiles()
         {
          return GetFilesFromType(new List<string> {"jpg", "png"});
@@ -68,20 +98,6 @@ namespace DDControllers
         }
         
 
-        public IEnumerable<string> GetPngs()
-        {
-            return GetFilesFromType("png").ToList();
-        }
-
-        public IEnumerable<string> GetJpgs()
-        {
-            return GetFilesFromType("jpg").ToList();
-        }
-  
-        public string GetDirectoryPath()
-        {
-            return dir;
-        }
 
         public List<string> GetAllFiles()
         {       
@@ -93,20 +109,21 @@ namespace DDControllers
             return allFiles;
         }
 
-        public int GetFileCount()
-        {
-            return totalCount;
-        }
 
-        public int GetJpgCount()
-        {
-            return jpgCount;
-        }
+    
+        public IEnumerable<string> GetPngs()=> GetFilesFromType("png");
+      
 
-        public int GetPngCount()
-        {
-            return pngCount;
-        }
+        // return GetFilesFromType("png").ToList();
+
+        public IEnumerable<string> GetJpgs() => GetFilesFromType("jpg");
+        //  return GetFilesFromType("jpg").ToList();
+        public string GetDirectoryPath()=> dir;
+        public int GetFileCount()=>totalCount;
+
+        public int GetJpgCount()=> jpgCount;
+        public int GetPngCount()=> pngCount;
+      
 
         public void PrintSummary()
         {

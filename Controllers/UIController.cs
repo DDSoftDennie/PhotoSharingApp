@@ -44,6 +44,20 @@ namespace DDControllers
             }
             
         }
+
+        public int AskFolderNumber()
+        {
+            Console.WriteLine("Please enter the folder number:");
+            string? num = Console.ReadLine();
+            if (num == null)
+            {
+                throw new ArgumentNullException("num");
+            }
+            else
+            {
+                return int.Parse(num);
+            }
+        }
         public string AskForContainerName()
         {
             Console.WriteLine("Please enter the container name:");
@@ -117,6 +131,14 @@ namespace DDControllers
                 return endTrim;
             }
         }
+        public int AskMainMenu()
+        {
+            WriteLine("Please enter the numberof the option you want to choose:");
+            WriteLine("1. List all folders");
+            WriteLine("2. Navigate to folder");
+            WriteLine("3. Exit");
+            return GetValidOption(Console.ReadLine(),3);
+        }
         public int AskOptions()
         {
             WriteLine("Please enter the number of the option you want to select:");
@@ -124,14 +146,25 @@ namespace DDControllers
             WriteLine("2. Upload IMAGE files to blob storage");
             WriteLine("3. Split JPEG files into PNG files");
             WriteLine("4. Exit");
-            string? answer = Console.ReadLine();
-            if (answer == null)
+            return GetValidOption(Console.ReadLine(),4);
+        }
+        private int GetValidOption(string answer, int max)
+        {
+             if (answer == null)
             {
                 throw new ArgumentNullException("answer");
             }
             else
             {
-                return int.Parse(answer);
+                int option = int.Parse(answer);
+                if (option > max || option < 1)
+                {
+                    throw new ArgumentOutOfRangeException("option");
+                }
+                else
+                {
+                    return option;
+                }
             }
         }
         private List<string> GetAllFiles()

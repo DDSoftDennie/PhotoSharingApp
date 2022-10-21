@@ -11,16 +11,46 @@ var ui = new UIController();
 var fc = new FileController(ui.GetDirectory());
 var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
+
+int MenuChoice = ui.AskMainMenu();
+
+while (MenuChoice <3)
+{
+    switch (MenuChoice)
+    {
+        case 1:
+        {
+            var folders = fc.GetFoldersWithNum();
+            foreach (var folder in folders)
+            {
+                ui.PrintString(folder);
+            }
+            break;
+        }
+        case 2:
+        {
+            fc = new FileController(fc.GetFolderByNum(ui.AskFolderNumber()));
+            MenuChoice = 3;
+            continue;
+
+        }
+    }
+    MenuChoice = ui.AskMainMenu();
+}
+
+
+
 PhotoRepository repo = new PhotoRepository();
 repo.LoadPhotos(fc.GetPhotoFiles().ToList());
 ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
 
 
-int Action = ui.AskOptions();
-while (Action <4)
+
+int Option = ui.AskOptions();
+while (Option <4)
 {
 
-    switch(Action)
+    switch(Option)
     {
     case 1:
         { 
@@ -63,5 +93,5 @@ while (Action <4)
             break;
         }
     }
-    Action = ui.AskOptions();
+    Option = ui.AskOptions();
 } 
