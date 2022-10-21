@@ -64,7 +64,7 @@ namespace DDControllers
             foreach (var folder in folders)
             {
                 i++;
-                yield return $"{i}. {folder}";
+                yield return $"{i}| {folder}";
             }
 
         }
