@@ -90,12 +90,40 @@ namespace DDControllers
             }
         }
 
+        public string AskForStartTrim()
+        {
+            Console.WriteLine("Please enter the start trim:");
+            string? startTrim = Console.ReadLine();
+            if (startTrim == null)
+            {
+                throw new ArgumentNullException("startTrim");
+            }
+            else
+            {
+                return startTrim;
+            }
+        }
+
+        public string AskForEndTrim()
+        {
+            Console.WriteLine("Please enter the end trim:");
+            string? endTrim = Console.ReadLine();
+            if (endTrim == null)
+            {
+                throw new ArgumentNullException("endTrim");
+            }
+            else
+            {
+                return endTrim;
+            }
+        }
         public int AskOptions()
         {
             WriteLine("Please enter the number of the option you want to select:");
             WriteLine("1. List all IMAGE files");
             WriteLine("2. Upload IMAGE files to blob storage");
-            WriteLine("3. Exit");
+            WriteLine("3. Split JPEG files into PNG files");
+            WriteLine("4. Exit");
             string? answer = Console.ReadLine();
             if (answer == null)
             {
@@ -114,9 +142,8 @@ namespace DDControllers
         
         private List<string> GetAllFilesFromType(string type)
         {
-           // type = AskForFileType();
             type = "." + type;
-            List<string> files = fc.GetFilesFromType(type);
+            List<string> files = fc.GetFilesFromType(type).ToList();
             return files;
         }
 

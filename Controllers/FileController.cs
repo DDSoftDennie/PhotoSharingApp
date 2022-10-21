@@ -24,11 +24,11 @@ namespace DDControllers
             files = Directory.GetFiles(".");
             foreach (string file in files)
             {
-                if (file.EndsWith(".png"))
+                if (file.EndsWith(".png") || file.EndsWith(".PNG"))
                 {
                     pngCount++;
                 }
-                else if (file.EndsWith(".jpg"))
+                else if (file.EndsWith(".jpg") || file.EndsWith(".JPG"))
                 {
                     jpgCount++;
                 }
@@ -40,47 +40,42 @@ namespace DDControllers
             }
         }
 
-        public List<string> GetPhotoFiles()
+        public IEnumerable<string> GetPhotoFiles()
         {
-            List<string> photoFiles = new List<string>();
-            foreach (string file in files)
-            {
-                if (file.EndsWith(".png") || file.EndsWith(".jpg"))
-                {
-                    photoFiles.Add(file);
-                }
-            }
-            return photoFiles;
+         return GetFilesFromType(new List<string> {"jpg", "png"});
         }
 
-        public List<string> GetPngs()
+        public IEnumerable<string> GetFilesFromType(string type)
         {
-            List<string> pngs = new List<string>();
-            int i = 0;
             foreach (string file in files)
             {
-                if (file.EndsWith(".png"))
+                if (file.EndsWith(type, StringComparison.OrdinalIgnoreCase))
                 {
-                    pngs.Add(file);
-                    i++;
+                    yield return file;
                 }
             }
-            return pngs;
+     
         }
 
-        public List<string> GetJpgs()
-        {
-            List<string> jpgs = new List<string>();
-            int i = 0;
-            foreach (string file in files)
+        public IEnumerable<string> GetFilesFromType(IEnumerable<string> types)
+        {  
+            var output = new List<string>();
+            foreach (string type in types)
             {
-                if (file.EndsWith(".jpg"))
-                {
-                    jpgs.Add(file);
-                    i++;
-                }
+                output.AddRange(GetFilesFromType(type));
             }
-            return jpgs;
+            return output;
+        }
+        
+
+        public IEnumerable<string> GetPngs()
+        {
+            return GetFilesFromType("png").ToList();
+        }
+
+        public IEnumerable<string> GetJpgs()
+        {
+            return GetFilesFromType("jpg").ToList();
         }
   
         public string GetDirectoryPath()
@@ -103,18 +98,6 @@ namespace DDControllers
             return totalCount;
         }
 
-        public List<string> GetFilesFromType(string type)
-        {
-            List<string> filteredFiles = new List<string>(); 
-            foreach (string file in files)
-            {
-                if (file.EndsWith(type))
-                {
-                    filteredFiles.Add(file);
-                }
-            }
-            return filteredFiles;
-        }
         public int GetJpgCount()
         {
             return jpgCount;
