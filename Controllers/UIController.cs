@@ -1,5 +1,6 @@
 namespace DDControllers
 {
+
     public class UIController
     {
         private FileController? fc;
@@ -131,22 +132,27 @@ namespace DDControllers
                 return endTrim;
             }
         }
-        public int AskMainMenu()
+       
+
+        public MainMenuChoice AskMainMenu()
         {
-            WriteLine("Please enter the numberof the option you want to choose:");
+            WriteLine("Please enter the number of the option you want to choose:");
             WriteLine("1. List all folders");
             WriteLine("2. Navigate to folder");
             WriteLine("3. Exit");
-            return GetValidOption(Console.ReadLine(),3);
+            MainMenuChoice choice = (MainMenuChoice)int.Parse(Console.ReadLine());
+            return choice;
         }
-        public int AskOptions()
+ 
+        public Options AskOptions()
         {
             WriteLine("Please enter the number of the option you want to select:");
             WriteLine("1. List all IMAGE files");
             WriteLine("2. Upload IMAGE files to blob storage");
             WriteLine("3. Split JPEG files into PNG files");
             WriteLine("4. Exit");
-            return GetValidOption(Console.ReadLine(),4);
+            Options option = (Options)int.Parse(Console.ReadLine());
+            return option;
         }
         private int GetValidOption(string answer, int max)
         {
