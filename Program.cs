@@ -1,72 +1,42 @@
 ﻿using DDControllers;
-
-
 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.local.json");
 var configuration = builder.Build();
 var connectionString = configuration.GetConnectionString("StorageAccount");               
-
-
 var ui = new UIController();
-var fc = new FileController(ui.GetDirectory());
+var repo = new PhotoRepository();
+var imageFileService = new ImageFileService();
+var folderService = new FolderService();
 var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
 
-var MenuChoice = ui.AskMainMenu();
 
-while (MenuChoice != MainMenuChoice.Exit)
+ui.PrintWelcome();
+imageFileService.SetDirectory(ui.AskForDirectory());
+
+if(FolderTasksAreHandled())
 {
-    switch (MenuChoice)
-    {
-        case MainMenuChoice.ListAllFolders:
-        {
-            PrintAllFolders();
-            break;
-        }
-        case MainMenuChoice.NavigateToFolder:
-        {
-            fc = new FileController(fc.GetFolderByNum(ui.AskFolderNumber()));
-            MenuChoice = MainMenuChoice.Exit;
-            continue;
-        }
-    }
-    MenuChoice = ui.AskMainMenu();
+
 }
 
 
+//ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
 
-PhotoRepository repo = new PhotoRepository();
-repo.LoadPhotos(fc.GetPhotoFiles().ToList());
-ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
-
-var Option = ui.AskOptions();
-while (Option != Options.Exit)
+void InitializeRepo()
 {
-    switch (Option)
-    {
-        case Options.ListAllImages:
-        {
-            ListAllImages();
-            break;
-        }
-        case Options.UploadImages:
-        {
-            UploadImagesAndAddToStorageTable();
-            break;
-        }
-        case Options.SplitImagesOnFileType:
-        {
-            SplitImagesOnFileType();
-            break;
-        }
-    }
-    Option = ui.AskOptions();
+    repo = new PhotoRepository(imageFileService.GetPhotoFiles().ToList());
+
+}
+
+void EmptyRepo()
+{
+    repo.Empty();
 }
 
 void PrintAllFolders()
 {
-    var folders = fc.GetFoldersWithNum();
+    var folders = folderService.GetFoldersWithNum();
     foreach (var folder in folders)
     {
         Console.WriteLine(folder);
@@ -101,14 +71,77 @@ void UploadImagesAndAddToStorageTable()
 
 void SplitImagesOnFileType()
 {
-    ui.PrintString("This are the JPG files:");
-    foreach (var p in fc.GetJpgs())
+    Console.WriteLine("This are the JPG files:");
+    foreach (var p in imageFileService.GetJpgs())
     {
-        ui.PrintString(p);
+        Console.WriteLine(p);
     }
-    ui.PrintString("This are the PNG files:");
-    foreach (var p in fc.GetPngs())
+
+    Console.WriteLine("This are the PNG files:");
+    foreach (var p in imageFileService.GetPngs())
     {
-        ui.PrintString(p);
+        Console.WriteLine(p);
     }
+}
+
+bool FolderTasksAreHandled()
+{
+    FolderMenu FolderMenuChoice;
+    do
+    {
+        FolderMenuChoice = ui.AskFolderMenuChoice();
+        switch (FolderMenuChoice)
+        {
+            case FolderMenu.ListAllFolders:
+            {
+                PrintAllFolders();
+                break;
+            }
+            case FolderMenu.NavigateToFolder:
+            {
+                
+                string newDirectory = folderService.GetFolderByNum(ui.AskFolderNumber());
+                imageFileService.SetDirectory(newDirectory);
+                if (FileTasksAreHandled() == true)
+                {
+                    break;
+                }else
+                {
+                    return false;
+                }
+                break;
+            }
+        }
+    } while(FolderMenuChoice != FolderMenu.Back);
+    return true;
+}
+
+bool FileTasksAreHandled()
+{
+    FileMenu FileMenuChoice;
+    do
+    {
+        FileMenuChoice = ui.AskFileMenuChoice();
+        InitializeRepo();
+        switch (FileMenuChoice)
+        {
+            case FileMenu.ListAllImages:
+            {
+                ListAllImages();
+                break;
+            }
+            case FileMenu.UploadImages:
+            {
+                UploadImagesAndAddToStorageTable();
+                break;
+            }
+            case FileMenu.SplitImagesOnFileType:
+            {
+                SplitImagesOnFileType();
+                break;
+            }
+        }
+    }while(FileMenuChoice != FileMenu.Back);
+    EmptyRepo();
+    return true;
 }

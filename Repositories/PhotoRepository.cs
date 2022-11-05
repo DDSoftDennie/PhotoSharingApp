@@ -1,6 +1,21 @@
 public class PhotoRepository
 {
-    private List<Photo> Photos { get; set; } = new List<Photo>();
+    private List<Photo> Photos { get; set; }
+
+    public PhotoRepository()
+    {
+        Photos = new List<Photo>();
+    }
+
+    public PhotoRepository(List<string> fileNames)
+    {
+        Photos = new List<Photo>();
+        foreach (var fileName in fileNames)
+        {
+             Photos.Add(new Photo { FileName = fileName });
+        }
+    }
+
 
     public Photo GetPhoto(string FileName) => 
                                                 Photos
@@ -44,4 +59,8 @@ public class PhotoRepository
 
     }
 
+    public void Empty()
+    {
+        Photos = null;
+    }
 }

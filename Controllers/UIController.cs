@@ -3,17 +3,22 @@ namespace DDControllers
 
     public class UIController
     {
-        private FileController? fc;
-       // private BlobController? bc;
-
+ 
+  
         private string dir ="";
+        private ImageFileService _imageFileService;
+        
         public UIController(){
-            WriteLine("Welcome to DD Blob Uploader! ");
-            WriteLine("-----------------------------------------------------");
-            dir = AskForDirectory();
+    
         }
 
-        private string AskForDirectory()
+        public void PrintWelcome()
+        {
+            WriteLine("Welcome to DD Blob Uploader! ");
+            WriteLine("-----------------------------------------------------");
+        }
+
+        public string AskForDirectory()
         {
             Console.WriteLine("Please enter the directory you want to upload from:");
             string? dir = Console.ReadLine();
@@ -133,26 +138,27 @@ namespace DDControllers
             }
         }
        
+    
 
-        public MainMenuChoice AskMainMenu()
+        public FolderMenu AskFolderMenuChoice()
         {
             WriteLine("Please enter the number of the option you want to choose:");
             WriteLine("1. List all folders");
             WriteLine("2. Navigate to folder");
             WriteLine("3. Exit");
-            MainMenuChoice choice = (MainMenuChoice)int.Parse(Console.ReadLine());
-            return choice;
+            FolderMenu MenuChoice = (FolderMenu)int.Parse(Console.ReadLine());
+            return MenuChoice;
         }
  
-        public Options AskOptions()
+        public FileMenu AskFileMenuChoice()
         {
             WriteLine("Please enter the number of the option you want to select:");
             WriteLine("1. List all IMAGE files");
             WriteLine("2. Upload IMAGE files to blob storage");
             WriteLine("3. Split JPEG files into PNG files");
-            WriteLine("4. Exit");
-            Options option = (Options)int.Parse(Console.ReadLine());
-            return option;
+            WriteLine("4. Back");
+            FileMenu MenuChoice = (FileMenu)int.Parse(Console.ReadLine());
+            return MenuChoice;
         }
         private int GetValidOption(string answer, int max)
         {
@@ -173,18 +179,18 @@ namespace DDControllers
                 }
             }
         }
-        private List<string> GetAllFiles()
-        {
-            List<string> files = fc.GetAllFiles();
+         private List<string> GetAllFiles()
+         {
+             List<string> files = _imageFileService.GetAllFiles();
             return files;
         }
         
         private List<string> GetAllFilesFromType(string type)
         {
-            type = "." + type;
-            List<string> files = fc.GetFilesFromType(type).ToList();
-            return files;
-        }
+             type = "." + type;
+             List<string> files = _imageFileService.GetFilesFromExtension(type).ToList();
+             return files;
+         }
 
         public void PrintString(string str)
         {
