@@ -10,23 +10,83 @@ var imageFileService = new ImageFileService();
 var folderService = new FolderService();
 var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
-
+string rootDirectory = "";
 
 ui.PrintWelcome();
-imageFileService.SetDirectory(ui.AskForDirectory());
+rootDirectory = ui.AskForDirectory();
+imageFileService.SetDirectory(rootDirectory);
 
-if(FolderTasksAreHandled())
+bool folderTasksArehandled = false;
+while (!folderTasksArehandled)
 {
+    folderTasksArehandled = FolderTasksAreHandled();
+} 
 
+bool FolderTasksAreHandled()
+{
+    FolderMenu FolderMenuChoice = ui.AskFolderMenuChoice();
+    switch (FolderMenuChoice)
+    {
+        case FolderMenu.ListAllFolders:
+        {
+            PrintAllFolders();
+            return false;
+        }
+        case FolderMenu.NavigateToFolder:
+        {
+            string newDirectory = folderService.GetFolderByNum(ui.AskFolderNumber());
+            imageFileService.SetDirectory(newDirectory);
+            bool filesAreHandled = false;
+            while (!filesAreHandled)
+            {
+                filesAreHandled = FileTasksAreHandled();
+            }
+            return false;
+        }
+        case FolderMenu.Back:
+        {
+            imageFileService.SetDirectory(rootDirectory);
+            return true;
+        }
+    }
+    return false;
 }
 
+bool FileTasksAreHandled()
+{
+    FileMenu FileMenuChoice = ui.AskFileMenuChoice();
+    InitializeRepo();
+    switch (FileMenuChoice)
+    {
+        case FileMenu.ListAllImages:
+        {
+            ListAllImages();
+            return false;
+        }
+        case FileMenu.UploadImages:
+        {
+            UploadImagesAndAddToStorageTable();
+            return false;
+        }
+        case FileMenu.SplitImagesOnFileType:
+        {
+            SplitImagesOnFileType();
+            return false;
+        }
+        case FileMenu.Back:
+        {
+            EmptyRepo();
+            imageFileService.SetDirectory(rootDirectory);
+            return true;
+        }
+    }
+    return false;
+}
 
 //ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
-
 void InitializeRepo()
 {
     repo = new PhotoRepository(imageFileService.GetPhotoFiles().ToList());
-
 }
 
 void EmptyRepo()
@@ -42,7 +102,6 @@ void PrintAllFolders()
         Console.WriteLine(folder);
     }
 }
-
 
 void ListAllImages()
 {
@@ -82,66 +141,4 @@ void SplitImagesOnFileType()
     {
         Console.WriteLine(p);
     }
-}
-
-bool FolderTasksAreHandled()
-{
-    FolderMenu FolderMenuChoice;
-    do
-    {
-        FolderMenuChoice = ui.AskFolderMenuChoice();
-        switch (FolderMenuChoice)
-        {
-            case FolderMenu.ListAllFolders:
-            {
-                PrintAllFolders();
-                break;
-            }
-            case FolderMenu.NavigateToFolder:
-            {
-                
-                string newDirectory = folderService.GetFolderByNum(ui.AskFolderNumber());
-                imageFileService.SetDirectory(newDirectory);
-                if (FileTasksAreHandled() == true)
-                {
-                    break;
-                }else
-                {
-                    return false;
-                }
-                break;
-            }
-        }
-    } while(FolderMenuChoice != FolderMenu.Back);
-    return true;
-}
-
-bool FileTasksAreHandled()
-{
-    FileMenu FileMenuChoice;
-    do
-    {
-        FileMenuChoice = ui.AskFileMenuChoice();
-        InitializeRepo();
-        switch (FileMenuChoice)
-        {
-            case FileMenu.ListAllImages:
-            {
-                ListAllImages();
-                break;
-            }
-            case FileMenu.UploadImages:
-            {
-                UploadImagesAndAddToStorageTable();
-                break;
-            }
-            case FileMenu.SplitImagesOnFileType:
-            {
-                SplitImagesOnFileType();
-                break;
-            }
-        }
-    }while(FileMenuChoice != FileMenu.Back);
-    EmptyRepo();
-    return true;
 }
