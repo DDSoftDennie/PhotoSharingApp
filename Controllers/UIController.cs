@@ -9,7 +9,7 @@ namespace DDControllers
         private ImageFileService _imageFileService;
         
         public UIController(){
-    
+            _imageFileService = new ImageFileService();
         }
 
         public void PrintWelcome()
@@ -124,6 +124,21 @@ namespace DDControllers
             }
         }
 
+        public string AskForStartTrim(string startTrim)
+        {
+            WriteLine($"Start trim: {startTrim}");
+            WriteLine("Pres ENTER to continue or write another start trim");
+            var answer = Console.ReadLine();
+            if(answer != null && answer != "")
+            {
+                return answer;
+            }
+            else
+            {
+                return startTrim;
+            }
+        }
+
         public string AskForEndTrim()
         {
             Console.WriteLine("Please enter the end trim:");
@@ -137,16 +152,31 @@ namespace DDControllers
                 return endTrim;
             }
         }
-       
-    
+
+        public string AskForEndTrim(string endTrim)
+        {
+            WriteLine($"End trim: {endTrim}");
+            WriteLine("Pres ENTER to continue or write another end trim");
+            var answer = Console.ReadLine();
+            if (answer != null && answer != "")
+            {
+                return answer;
+            }
+            else
+            {
+                return endTrim;
+            }
+        }
+
 
         public FolderMenu AskFolderMenuChoice()
         {
             WriteLine("Please enter the number of the option you want to choose:");
             WriteLine("1. List all folders");
             WriteLine("2. Navigate to folder");
-            WriteLine("3. Exit");
-            FolderMenu MenuChoice = (FolderMenu)int.Parse(Console.ReadLine());
+            WriteLine("3. Change PhotoSharingApp ROOT folder");
+            WriteLine("4. Exit");
+            FolderMenu MenuChoice = (FolderMenu)int.Parse(ReadLine());
             return MenuChoice;
         }
  
@@ -157,7 +187,7 @@ namespace DDControllers
             WriteLine("2. Upload IMAGE files to blob storage");
             WriteLine("3. Split JPEG files into PNG files");
             WriteLine("4. Back");
-            FileMenu MenuChoice = (FileMenu)int.Parse(Console.ReadLine());
+            FileMenu MenuChoice = (FileMenu)int.Parse(ReadLine());
             return MenuChoice;
         }
         private int GetValidOption(string answer, int max)
@@ -192,10 +222,8 @@ namespace DDControllers
              return files;
          }
 
-        public void PrintString(string str)
-        {
-            Console.WriteLine(str);
-        }
+        public void PrintString(string str) => WriteLine(str);
+
 
         public void PrintAllFiles()
         {
@@ -207,10 +235,12 @@ namespace DDControllers
         
         }
 
-        public void PrintSummary(string path, int pngCount, int jpgCount)
-        {
+        public void PrintDirectory(string dir) => WriteLine($"Photo directory: {dir}");
+            
+        
+        public void PrintSummary(string path, int pngCount, int jpgCount)=>
             WriteLine($"In {path} there are {pngCount} png files and {jpgCount} jpg files.");
-        }
+
 
         public void PrintAllFilesInList(List<string> files)
         {

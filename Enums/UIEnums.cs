@@ -10,7 +10,8 @@
     {
         ListAllFolders = 1,
         NavigateToFolder = 2,
-        Back = 3
+        ChangeFolder = 3,
+        Back = 4
     }
 
     public enum FileMenu

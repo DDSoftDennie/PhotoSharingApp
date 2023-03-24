@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj": {}
+    "C:\\DDSoft\\Projects\\2022\\Trips\\PhotoSharingApp\\PhotoSharingApp.csproj": {}
   },
   "projects": {
-    "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj": {
+    "C:\\DDSoft\\Projects\\2022\\Trips\\PhotoSharingApp\\PhotoSharingApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj",
+        "projectUniqueName": "C:\\DDSoft\\Projects\\2022\\Trips\\PhotoSharingApp\\PhotoSharingApp.csproj",
         "projectName": "PhotoSharingApp",
-        "projectPath": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj",
+        "projectPath": "C:\\DDSoft\\Projects\\2022\\Trips\\PhotoSharingApp\\PhotoSharingApp.csproj",
         "packagesPath": "C:\\Users\\dpcfr\\.nuget\\packages\\",
-        "outputPath": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\obj\\",
+        "outputPath": "C:\\DDSoft\\Projects\\2022\\Trips\\PhotoSharingApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -77,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200-preview.22628.1\\RuntimeIdentifierGraph.json"
         }
       }
     }

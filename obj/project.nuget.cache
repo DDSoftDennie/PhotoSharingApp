@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oD3gMvoAmQErDWtTv2q7X2r0Mct+NSbTNiBdwyz9ffmWDA4mBHSzU6l5UQkaXl2y9wipTpppJGL1k9DlmLtQkg==",
+  "dgSpecHash": "LPlPB4W1XF8XW6lzI02kYx/CYWYO/LzxVzv/5CAGLkC9skDKp+tZwj+Br2EpUL/l7ZjNVw/mqlWHk68pJesENw==",
   "success": true,
-  "projectFilePath": "C:\\DDSoft\\Learn\\Storage\\PhotoSharingApp\\PhotoSharingApp\\PhotoSharingApp.csproj",
+  "projectFilePath": "C:\\DDSoft\\Projects\\2022\\Trips\\PhotoSharingApp\\PhotoSharingApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dpcfr\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\dpcfr\\.nuget\\packages\\azure.data.tables\\12.6.1\\azure.data.tables.12.6.1.nupkg.sha512",

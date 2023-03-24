@@ -1,4 +1,7 @@
 ﻿using DDControllers;
+using PhotoSharingApp.Factories;
+using PhotoSharingApp.Model;
+
 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.local.json");
@@ -10,12 +13,14 @@ var imageFileService = new ImageFileService();
 var folderService = new FolderService();
 var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
+var formatFactory = new FormatFactory("C:\\Users\\dpcfr\\Documents\\Afbeeldingen\\format.csv");
 string rootDirectory = "";
 
 ui.PrintWelcome();
-rootDirectory = ui.AskForDirectory();
+rootDirectory = "C:\\Users\\dpcfr\\Documents\\Afbeeldingen\\";
 imageFileService.SetDirectory(rootDirectory);
-
+ui.PrintDirectory(rootDirectory);
+Format format = formatFactory.getFormat();
 bool folderTasksArehandled = false;
 while (!folderTasksArehandled)
 {
@@ -36,13 +41,16 @@ bool FolderTasksAreHandled()
         {
             string newDirectory = folderService.GetFolderByNum(ui.AskFolderNumber());
             imageFileService.SetDirectory(newDirectory);
-            bool filesAreHandled = false;
-            while (!filesAreHandled)
-            {
-                filesAreHandled = FileTasksAreHandled();
-            }
+            HandleFiles();
             return false;
         }
+        case FolderMenu.ChangeFolder:
+            {
+                var dir = ui.AskForDirectory();
+                imageFileService.SetDirectory(dir);
+                HandleFiles();
+                return false;
+            }
         case FolderMenu.Back:
         {
             imageFileService.SetDirectory(rootDirectory);
@@ -50,6 +58,15 @@ bool FolderTasksAreHandled()
         }
     }
     return false;
+}
+
+void HandleFiles()
+{
+    bool filesAreHandled = false;
+    while (!filesAreHandled)
+    {
+        filesAreHandled = FileTasksAreHandled();
+    }
 }
 
 bool FileTasksAreHandled()
@@ -83,7 +100,6 @@ bool FileTasksAreHandled()
     return false;
 }
 
-//ui.PrintSummary(fc.GetDirectoryPath(), fc.GetPngCount(), fc.GetJpgCount());
 void InitializeRepo()
 {
     repo = new PhotoRepository(imageFileService.GetPhotoFiles().ToList());
@@ -115,8 +131,8 @@ void UploadImagesAndAddToStorageTable()
 {
     string containerName = ui.AskForContainerName();
     blobService.CreateContainer(containerName);
-    string startTrim = ui.AskForStartTrim();
-    string endTrim = ui.AskForEndTrim();
+    string startTrim = ui.AskForStartTrim(format.StartTrim.ToString()) ;
+    string endTrim = ui.AskForEndTrim(format.EndTrim.ToString()) ;
 
     foreach(string p in repo.GetAllPhotoNames())
     {
