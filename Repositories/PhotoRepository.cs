@@ -41,7 +41,7 @@ public class PhotoRepository
         }
     }
 
-    public TableEntity ToEntity(Photo p, string containerName, string startTrim, string endTrim)
+    public Azure.Data.Tables.TableEntity ToEntity(Photo p, string containerName, string startTrim, string endTrim)
     {
         string partitionKey = containerName;
         string photoNum = p.FileName.TrimEnd(endTrim.ToCharArray());

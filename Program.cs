@@ -15,16 +15,17 @@ var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
 var formatFactory = new FormatFactory("C:\\Users\\dpcfr\\Documents\\Afbeeldingen\\format.csv");
 string rootDirectory = "";
-
-ui.PrintWelcome();
 rootDirectory = "C:\\Users\\dpcfr\\Documents\\Afbeeldingen\\";
 imageFileService.SetDirectory(rootDirectory);
-ui.PrintDirectory(rootDirectory);
 Format format = formatFactory.getFormat();
-bool folderTasksArehandled = false;
-while (!folderTasksArehandled)
+bool folderTasksAreHandled = false;
+
+ui.PrintWelcome();
+ui.PrintDirectory(rootDirectory);
+
+while (!folderTasksAreHandled)
 {
-    folderTasksArehandled = FolderTasksAreHandled();
+    folderTasksAreHandled = FolderTasksAreHandled();
 } 
 
 bool FolderTasksAreHandled()
@@ -45,12 +46,12 @@ bool FolderTasksAreHandled()
             return false;
         }
         case FolderMenu.ChangeFolder:
-            {
-                var dir = ui.AskForDirectory();
-                imageFileService.SetDirectory(dir);
-                HandleFiles();
-                return false;
-            }
+        {
+            var dir = ui.AskForDirectory();
+            imageFileService.SetDirectory(dir);
+            HandleFiles();
+            return false;
+        }
         case FolderMenu.Back:
         {
             imageFileService.SetDirectory(rootDirectory);
@@ -82,7 +83,7 @@ bool FileTasksAreHandled()
         }
         case FileMenu.UploadImages:
         {
-            UploadImagesAndAddToStorageTable();
+            AddImagesToStorageTable(UploadImagesAndGetStorageInfo());
             return false;
         }
         case FileMenu.SplitImagesOnFileType:
@@ -115,7 +116,7 @@ void PrintAllFolders()
     var folders = folderService.GetFoldersWithNum();
     foreach (var folder in folders)
     {
-        Console.WriteLine(folder);
+        WriteLine(folder);
     }
 }
 
@@ -123,38 +124,65 @@ void ListAllImages()
 {
     foreach(var p in repo.GetAllPhotoNames())
     {
-        Console.WriteLine(p);
+        WriteLine(p);
     }
 }
 
-void UploadImagesAndAddToStorageTable()
+(string?, string?, string?) UploadImagesAndGetStorageInfo()
 {
-    string containerName = ui.AskForContainerName();
-    blobService.CreateContainer(containerName);
-    string startTrim = ui.AskForStartTrim(format.StartTrim.ToString()) ;
-    string endTrim = ui.AskForEndTrim(format.EndTrim.ToString()) ;
-
-    foreach(string p in repo.GetAllPhotoNames())
+    if(repo != null && blobService != null)
     {
-        blobService.UploadBlob(p);
-        ui.PrintString($"Uploaded {p} to {containerName}");
-        var E = repo.ToEntity(repo.GetPhoto(p), containerName, startTrim, endTrim);
-    
-        tableService.InsertEntity(E);
+        string containerName = ui.AskForContainerName();
+        blobService.CreateContainer(containerName);
+        string startTrim = ui.AskForStartTrim(format.StartTrim.ToString());
+        string endTrim = ui.AskForEndTrim(format.EndTrim.ToString());
+
+        foreach (string p in repo.GetAllPhotoNames())
+        {
+            blobService.UploadBlob(p);
+            WriteLine($"Uploaded {p} to {containerName}");
+        }
+        return (containerName, startTrim, endTrim);
+    }
+    else
+    {
+        WriteLine("Error with uploading!");
+    }
+    return (null, null, null);
+
+}
+
+void AddImagesToStorageTable((string?, string?,string?) storageInfo)
+{
+    if(repo != null && tableService != null)
+    {
+        if(storageInfo.Item1 != null && storageInfo.Item2 != null && storageInfo.Item3 != null)
+        {
+            foreach (string p in repo.GetAllPhotoNames())
+            {
+                var E = repo.ToEntity(repo.GetPhoto(p), storageInfo.Item1, storageInfo.Item2, storageInfo.Item3);
+                tableService.InsertEntity(E);
+            }
+            WriteLine("Added images to storage table");
+        }
+        else
+        {
+            WriteLine("Error adding images to storage table");
+        }
     }
 }
 
 void SplitImagesOnFileType()
 {
-    Console.WriteLine("This are the JPG files:");
+    WriteLine("This are the JPG files:");
     foreach (var p in imageFileService.GetJpgs())
     {
-        Console.WriteLine(p);
+        WriteLine(p);
     }
 
-    Console.WriteLine("This are the PNG files:");
+    WriteLine("This are the PNG files:");
     foreach (var p in imageFileService.GetPngs())
     {
-        Console.WriteLine(p);
+        WriteLine(p);
     }
 }
