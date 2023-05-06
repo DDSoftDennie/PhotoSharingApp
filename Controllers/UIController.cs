@@ -1,15 +1,14 @@
+using Controllers;
+
 namespace DDControllers
 {
-
     public class UIController
     {
- 
-  
         private string dir ="";
-        private ImageFileService _imageFileService;
+        private ImageFileController _imageFileController;
         
         public UIController(){
-            _imageFileService = new ImageFileService();
+            _imageFileController = new ImageFileController();
         }
 
         public void PrintWelcome()
@@ -112,7 +111,7 @@ namespace DDControllers
 
         public string AskForStartTrim()
         {
-            Console.WriteLine("Please enter the start trim:");
+            WriteLine("Please enter the start trim:");
             string? startTrim = Console.ReadLine();
             if (startTrim == null)
             {
@@ -141,7 +140,7 @@ namespace DDControllers
 
         public string AskForEndTrim()
         {
-            Console.WriteLine("Please enter the end trim:");
+           WriteLine("Please enter the end trim:");
             string? endTrim = Console.ReadLine();
             if (endTrim == null)
             {
@@ -211,14 +210,14 @@ namespace DDControllers
         }
          private List<string> GetAllFiles()
          {
-             List<string> files = _imageFileService.GetAllFiles();
+             List<string> files = _imageFileController.GetAllFiles();
             return files;
         }
         
         private List<string> GetAllFilesFromType(string type)
         {
              type = "." + type;
-             List<string> files = _imageFileService.GetFilesFromExtension(type).ToList();
+             List<string> files = _imageFileController.GetFilesFromExtension(type).ToList();
              return files;
          }
 

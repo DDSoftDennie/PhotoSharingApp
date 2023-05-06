@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Runtime.CompilerServices;
-using PhotoSharingApp.Model;
-using Microsoft.Extensions.Primitives;
+﻿using PhotoSharingApp.Model;
+
 
 namespace PhotoSharingApp.Factories
 {

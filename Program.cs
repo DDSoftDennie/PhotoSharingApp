@@ -1,6 +1,8 @@
-﻿using DDControllers;
+﻿using Controllers;
+using DDControllers;
 using PhotoSharingApp.Factories;
 using PhotoSharingApp.Model;
+using Repositories;
 
 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
@@ -9,14 +11,13 @@ var configuration = builder.Build();
 var connectionString = configuration.GetConnectionString("StorageAccount");               
 var ui = new UIController();
 var repo = new PhotoRepository();
-var imageFileService = new ImageFileService();
-var folderService = new FolderService();
+var imageFileController = new ImageFileController();
+var folderController = new FolderController();
 var blobService = new DDBlobService(connectionString);
 var tableService = new DDTableService(connectionString, "conferencepictures");
 var formatFactory = new FormatFactory("C:\\Users\\dpcfr\\Documents\\Afbeeldingen\\format.csv");
-string rootDirectory = "";
-rootDirectory = "C:\\Users\\dpcfr\\Documents\\Afbeeldingen\\";
-imageFileService.SetDirectory(rootDirectory);
+string rootDirectory = "C:\\Users\\dpcfr\\Documents\\Afbeeldingen\\";
+imageFileController.SetDirectory(rootDirectory);
 Format format = formatFactory.getFormat();
 bool folderTasksAreHandled = false;
 
@@ -40,21 +41,21 @@ bool FolderTasksAreHandled()
         }
         case FolderMenu.NavigateToFolder:
         {
-            string newDirectory = folderService.GetFolderByNum(ui.AskFolderNumber());
-            imageFileService.SetDirectory(newDirectory);
+            string newDirectory = folderController.GetFolderByNum(ui.AskFolderNumber());
+            imageFileController.SetDirectory(newDirectory);
             HandleFiles();
             return false;
         }
         case FolderMenu.ChangeFolder:
         {
             var dir = ui.AskForDirectory();
-            imageFileService.SetDirectory(dir);
+            imageFileController.SetDirectory(dir);
             HandleFiles();
             return false;
         }
         case FolderMenu.Back:
         {
-            imageFileService.SetDirectory(rootDirectory);
+            imageFileController.SetDirectory(rootDirectory);
             return true;
         }
     }
@@ -94,7 +95,7 @@ bool FileTasksAreHandled()
         case FileMenu.Back:
         {
             EmptyRepo();
-            imageFileService.SetDirectory(rootDirectory);
+            imageFileController.SetDirectory(rootDirectory);
             return true;
         }
     }
@@ -103,7 +104,7 @@ bool FileTasksAreHandled()
 
 void InitializeRepo()
 {
-    repo = new PhotoRepository(imageFileService.GetPhotoFiles().ToList());
+    repo = new PhotoRepository(imageFileController.GetPhotoFiles().ToList());
 }
 
 void EmptyRepo()
@@ -113,7 +114,7 @@ void EmptyRepo()
 
 void PrintAllFolders()
 {
-    var folders = folderService.GetFoldersWithNum();
+    var folders = folderController.GetFoldersWithNum();
     foreach (var folder in folders)
     {
         WriteLine(folder);
@@ -175,13 +176,13 @@ void AddImagesToStorageTable((string?, string?,string?) storageInfo)
 void SplitImagesOnFileType()
 {
     WriteLine("This are the JPG files:");
-    foreach (var p in imageFileService.GetJpgs())
+    foreach (var p in imageFileController.GetJpgs())
     {
         WriteLine(p);
     }
 
     WriteLine("This are the PNG files:");
-    foreach (var p in imageFileService.GetPngs())
+    foreach (var p in imageFileController.GetPngs())
     {
         WriteLine(p);
     }

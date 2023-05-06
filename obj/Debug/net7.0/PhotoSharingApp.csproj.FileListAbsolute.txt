@@ -34,3 +34,5 @@ C:\DDSoft\Projects\2022\Trips\PhotoSharingApp\bin\Debug\net7.0\Model.dll
 C:\DDSoft\Projects\2022\Trips\PhotoSharingApp\bin\Debug\net7.0\Services.dll
 C:\DDSoft\Projects\2022\Trips\PhotoSharingApp\bin\Debug\net7.0\Model.pdb
 C:\DDSoft\Projects\2022\Trips\PhotoSharingApp\bin\Debug\net7.0\Services.pdb
+C:\DDSoft\Projects\2022\Trips\PhotoSharingApp\bin\Debug\net7.0\Repositories.dll
+C:\DDSoft\Projects\2022\Trips\PhotoSharingApp\bin\Debug\net7.0\Repositories.pdb

@@ -12,6 +12,7 @@
           "Azure.Storage.Blobs": "12.16.0",
           "Microsoft.Extensions.Configuration.Json": "7.0.0",
           "Model": "1.0.0",
+          "Repositories": "1.0.0",
           "Services": "1.0.0"
         },
         "runtime": {
@@ -206,6 +207,15 @@
           "Model.dll": {}
         }
       },
+      "Repositories/1.0.0": {
+        "dependencies": {
+          "Azure.Data.Tables": "12.8.0",
+          "Model": "1.0.0"
+        },
+        "runtime": {
+          "Repositories.dll": {}
+        }
+      },
       "Services/1.0.0": {
         "dependencies": {
           "Azure.Data.Tables": "12.8.0",
@@ -366,6 +376,11 @@
       "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
     },
     "Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Repositories/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

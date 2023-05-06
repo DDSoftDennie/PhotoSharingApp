@@ -358,6 +358,20 @@
           "bin/placeholder/Model.dll": {}
         }
       },
+      "Repositories/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Azure.Data.Tables": "12.8.0",
+          "Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Repositories.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Repositories.dll": {}
+        }
+      },
       "Services/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -955,6 +969,11 @@
       "path": "../Model/Model.csproj",
       "msbuildProject": "../Model/Model.csproj"
     },
+    "Repositories/1.0.0": {
+      "type": "project",
+      "path": "../Repositories/Repositories.csproj",
+      "msbuildProject": "../Repositories/Repositories.csproj"
+    },
     "Services/1.0.0": {
       "type": "project",
       "path": "../Services/Services.csproj",
@@ -967,6 +986,7 @@
       "Azure.Storage.Blobs >= 12.16.0",
       "Microsoft.Extensions.Configuration.Json >= 7.0.0",
       "Model >= 1.0.0",
+      "Repositories >= 1.0.0",
       "Services >= 1.0.0"
     ]
   },
@@ -1010,6 +1030,9 @@
           "projectReferences": {
             "C:\\DDSoft\\Projects\\2022\\Trips\\Model\\Model.csproj": {
               "projectPath": "C:\\DDSoft\\Projects\\2022\\Trips\\Model\\Model.csproj"
+            },
+            "C:\\DDSoft\\Projects\\2022\\Trips\\Repositories\\Repositories.csproj": {
+              "projectPath": "C:\\DDSoft\\Projects\\2022\\Trips\\Repositories\\Repositories.csproj"
             },
             "C:\\DDSoft\\Projects\\2022\\Trips\\Services\\Services.csproj": {
               "projectPath": "C:\\DDSoft\\Projects\\2022\\Trips\\Services\\Services.csproj"
