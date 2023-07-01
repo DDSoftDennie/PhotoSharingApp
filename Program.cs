@@ -161,8 +161,12 @@ void AddImagesToStorageTable((string?, string?,string?) storageInfo)
         {
             foreach (string p in repo.GetAllPhotoNames())
             {
-                var E = repo.ToEntity(repo.GetPhoto(p), storageInfo.Item1, storageInfo.Item2, storageInfo.Item3);
-                tableService.InsertEntity(E);
+				if(repo.GetPhoto(p)!= null)
+                {
+					tableService.InsertEntity(PhotoRepository.ToEntity(repo.GetPhoto(p), storageInfo.Item1, storageInfo.Item2, storageInfo.Item3));
+				}
+              //  var E = PhotoRepository.ToEntity(repo.GetPhoto(p), storageInfo.Item1, storageInfo.Item2, storageInfo.Item3);
+                
             }
             WriteLine("Added images to storage table");
         }
